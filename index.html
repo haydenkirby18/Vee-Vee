@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f5f3ee">
+<title>Vee-Vee</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  background: #f5f3ee;
+  color: #151515;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+               "SF Pro Text", Arial, sans-serif;
+}
+
+.app {
+  max-width: 500px;
+  margin: auto;
+  min-height: 100vh;
+  padding-bottom: 100px;
+}
+
+header {
+  padding: 30px 20px 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.pro {
+  border: 1px solid #bbb;
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+main {
+  padding: 10px 16px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  color: #777;
+}
+
+.title {
+  font-size: 40px;
+  line-height: .98;
+  letter-spacing: -2.5px;
+  margin: 7px 0 12px;
+}
+
+p {
+  color: #777;
+  line-height: 1.5;
+}
+
+.hero {
+  background: #151515;
+  color: white;
+  border-radius: 24px;
+  padding: 21px;
+  margin: 18px 0;
+}
+
+.hero p {
+  color: #c8c8c8;
+}
+
+.btn {
+  width: 100%;
+  min-height: 54px;
+  border: 0;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.white {
+  background: white;
+  color: #111;
+}
+
+.dark {
+  background: #111;
+  color: white;
+  margin-top: 12px;
+}
+
+.card {
+  background: #fffdf8;
+  border: 1px solid #dedbd2;
+  border-radius: 20px;
+  padding: 17px;
+  margin: 14px 0;
+}
+
+.card h2 {
+  font-size: 18px;
+  margin: 0 0 13px;
+}
+
+.upload {
+  border: 1.5px dashed #aaa;
+  border-radius: 17px;
+  padding: 28px 12px;
+  text-align: center;
+  display: block;
+  cursor: pointer;
+}
+
+.upload b {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.upload small {
+  color: #777;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.photo {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 13px;
+  background: #eee;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,.75);
+  color: white;
+  font-size: 18px;
+}
+
+.count {
+  text-align: center;
+  color: #777;
+  font-size: 12px;
+  margin-top: 9px;
+}
+
+#analyze,
+#result {
+  display: none;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.score {
+  background: #e7f4ec;
+  color: #217a4e;
+  border-radius: 12px;
+  padding: 8px;
+  text-align: center;
+  font-weight: 900;
+  font-size: 13px;
+}
+
+.era {
+  font-size: 31px;
+  font-weight: 900;
+  margin: 5px 0;
+}
+
+.sub {
+  font-size: 13px;
+  color: #777;
+}
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 7px;
+}
+
+.values div {
+  background: #f1efe9;
+  border-radius: 12px;
+  padding: 11px;
+}
+
+.values b {
+  display: block;
+  font-size: 17px;
+}
+
+.values small {
+  color: #777;
+  font-size: 9px;
+}
+
+.evidence {
+  display: flex;
+  justify-content: space-between;
+  padding: 11px 0;
+  border-bottom: 1px solid #dedbd2;
+  font-size: 13px;
+}
+
+.good {
+  font-weight: 800;
+}
+
+.warn {
+  color: #a66e1a;
+}
+
+.verdict {
+  background: #f0eee8;
+  border-radius: 14px;
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 500px;
+  margin: auto;
+  background: rgba(245,243,238,.96);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid #ddd;
+  padding: 10px 4px;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  font-size: 10px;
+  color: #777;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+  <div class="logo">vee-vee</div>
+  <div class="pro">PRO</div>
+</header>
+
+<main>
+
+<div class="eyebrow">VINTAGE INTELLIGENCE</div>
+
+<div class="title">
+  Know what<br>
+  you found.
+</div>
+
+<p>
+Upload multiple photos of a garment and Vee-Vee will evaluate
+its tags, construction, origin, material and graphics.
+</p>
+
+<div class="hero">
+
+<div class="eyebrow" style="color:#aaa">
+GARMENT SCANNER
+</div>
+
+<h2 style="margin:7px 0;font-size:24px">
+Scan a piece of clothing
+</h2>
+
+<p>
+Front + back + tag + care label gives the best result.
+</p>
+
+<button class="btn white" onclick="document.getElementById('photos').click()">
+＋ Add photos
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Garment photos</h2>
+
+<label class="upload" for="photos">
+
+<b>📷 Tap to choose photos</b>
+
+<small>
+Select up to 8 photos from your iPhone
+</small>
+
+</label>
+
+<input
+  id="photos"
+  type="file"
+  accept="image/*"
+  multiple
+>
+
+<div class="photo-grid" id="photoGrid"></div>
+
+<div class="count" id="count">
+0 photos selected
+</div>
+
+<button
+  class="btn dark"
+  id="analyze"
+>
+Analyze with Vee-Vee
+</button>
+
+</div>
+
+<section id="result">
+
+<div class="card">
+
+<div class="row">
+
+<div>
+
+<div class="eyebrow">
+BRAND DETECTED
+</div>
+
+<h2 style="font-size:27px;margin:4px 0">
+NIKE
+</h2>
+
+<div class="sub">
+Vintage T-shirt · Made in USA
+</div>
+
+</div>
+
+<div class="score">
+89/100<br>
+<small>LIKELY AUTHENTIC</small>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="eyebrow">
+ESTIMATED ERA
+</div>
+
+<div class="era">
+1992–1996
+</div>
+
+<div class="sub">
+87% confidence
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>
+Estimated market value
+</h2>
+
+<div class="values">
+
+<div>
+<b>$35</b>
+<small>QUICK SALE</small>
+</div>
+
+<div>
+<b>$50</b>
+<small>TYPICAL</small>
+</div>
+
+<div>
+<b>$68</b>
+<small>STRONG</small>
+</div>
+
+</div>
+
+<p>
+Suggested listing:
+<strong style="color:#111">$59</strong>
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+Why Vee-Vee thinks so
+</h2>
+
+<div class="evidence">
+<span>Tag construction</span>
+<span class="good">✓ Strong match</span>
+</div>
+
+<div class="evidence">
+<span>Country of origin</span>
+<span class="good">✓ Consistent</span>
+</div>
+
+<div class="evidence">
+<span>Stitching</span>
+<span class="good">✓ Consistent</span>
+</div>
+
+<div class="evidence">
+<span>Material</span>
+<span class="good">✓ Likely cotton</span>
+</div>
+
+<div class="evidence">
+<span>Graphic</span>
+<span class="warn">△ Moderate</span>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>
+Vee-Vee verdict
+</h2>
+
+<div class="verdict">
+
+Strong candidate for an early-to-mid 1990s Nike vintage tee.
+The tag, manufacturing origin and construction support the
+estimated period.
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<nav>
+
+<span>⌂<br>Scan</span>
+<span>▣<br>Collection</span>
+<span>⌕<br>Explore</span>
+<span>◉<br>Profile</span>
+
+</nav>
+
+</div>
+
+<script>
+
+let selectedPhotos = [];
+
+const input = document.getElementById("photos");
+const grid = document.getElementById("photoGrid");
+const count = document.getElementById("count");
+const analyze = document.getElementById("analyze");
+const result = document.getElementById("result");
+
+input.addEventListener("change", function() {
+
+  const newPhotos = Array.from(input.files);
+
+  selectedPhotos =
+    selectedPhotos
+    .concat(newPhotos)
+    .slice(0,8);
+
+  input.value = "";
+
+  renderPhotos();
+
+});
+
+function renderPhotos() {
+
+  grid.innerHTML = "";
+
+  selectedPhotos.forEach(function(photo,index) {
+
+    const box = document.createElement("div");
+    box.className = "photo";
+
+    const image = document.createElement("img");
+    image.src = URL.createObjectURL(photo);
+
+    const remove = document.createElement("button");
+
+    remove.className = "remove";
+    remove.innerHTML = "×";
+
+    remove.onclick = function() {
+
+      selectedPhotos.splice(index,1);
+
+      renderPhotos();
+
+    };
+
+    box.appendChild(image);
+    box.appendChild(remove);
+
+    grid.appendChild(box);
+
+  });
+
+  count.innerText =
+    selectedPhotos.length +
+    (selectedPhotos.length === 1
+    ? " photo selected"
+    : " photos selected");
+
+  analyze.style.display =
+    selectedPhotos.length > 0
+    ? "block"
+    : "none";
+
+}
+
+analyze.addEventListener("click", function() {
+
+  analyze.innerText = "Analyzing...";
+  analyze.disabled = true;
+
+  setTimeout(function() {
+
+    analyze.innerText = "Analyze with Vee-Vee";
+    analyze.disabled = false;
+
+    result.style.display = "block";
+
+    result.scrollIntoView({
+      behavior: "smooth"
+    });
+
+  },1200);
+
+});
+
+</script>
+
+</body>
+</html>
